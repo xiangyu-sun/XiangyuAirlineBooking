@@ -66,5 +66,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>INGetReservationDetailsIntent</string>
+		<string>com.example.apple-samplecode.Siri-Event-Suggestions.check-in</string>
+	</array>
 </dict>
 </plist>

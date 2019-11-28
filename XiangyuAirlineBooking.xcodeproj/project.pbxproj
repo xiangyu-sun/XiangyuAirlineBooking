@@ -13,6 +13,13 @@
 		46EBF585238D0D7500F47A4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46EBF584238D0D7500F47A4E /* Assets.xcassets */; };
 		46EBF588238D0D7500F47A4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46EBF587238D0D7500F47A4E /* Preview Assets.xcassets */; };
 		46EBF58B238D0D7500F47A4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46EBF589238D0D7500F47A4E /* LaunchScreen.storyboard */; };
+		46EBF593238D3B3000F47A4E /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF592238D3B3000F47A4E /* HelperExtensions.swift */; };
+		46EBF595238D3B4000F47A4E /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF594238D3B4000F47A4E /* Server.swift */; };
+		46EBF597238D700E00F47A4E /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF596238D700E00F47A4E /* BookingView.swift */; };
+		46EBF5B9238E8F3700F47A4E /* IntentsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5B8238E8F3700F47A4E /* IntentsTable.swift */; };
+		46EBF5BB238E905A00F47A4E /* ReservationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5BA238E905A00F47A4E /* ReservationDetailView.swift */; };
+		46EBF5BD238E936F00F47A4E /* ReservationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5BC238E936F00F47A4E /* ReservationsListView.swift */; };
+		46EBF5BF238FCE9C00F47A4E /* ActivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5BE238FCE9C00F47A4E /* ActivityHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,13 @@
 		46EBF587238D0D7500F47A4E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		46EBF58A238D0D7500F47A4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		46EBF58C238D0D7500F47A4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46EBF592238D3B3000F47A4E /* HelperExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
+		46EBF594238D3B4000F47A4E /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		46EBF596238D700E00F47A4E /* BookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingView.swift; sourceTree = "<group>"; };
+		46EBF5B8238E8F3700F47A4E /* IntentsTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentsTable.swift; sourceTree = "<group>"; };
+		46EBF5BA238E905A00F47A4E /* ReservationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailView.swift; sourceTree = "<group>"; };
+		46EBF5BC238E936F00F47A4E /* ReservationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationsListView.swift; sourceTree = "<group>"; };
+		46EBF5BE238FCE9C00F47A4E /* ActivityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +73,13 @@
 				46EBF57E238D0D7400F47A4E /* AppDelegate.swift */,
 				46EBF580238D0D7400F47A4E /* SceneDelegate.swift */,
 				46EBF582238D0D7400F47A4E /* ContentView.swift */,
+				46EBF596238D700E00F47A4E /* BookingView.swift */,
+				46EBF5BE238FCE9C00F47A4E /* ActivityHandler.swift */,
+				46EBF5B8238E8F3700F47A4E /* IntentsTable.swift */,
+				46EBF5BC238E936F00F47A4E /* ReservationsListView.swift */,
+				46EBF5BA238E905A00F47A4E /* ReservationDetailView.swift */,
+				46EBF594238D3B4000F47A4E /* Server.swift */,
+				46EBF592238D3B3000F47A4E /* HelperExtensions.swift */,
 				46EBF584238D0D7500F47A4E /* Assets.xcassets */,
 				46EBF589238D0D7500F47A4E /* LaunchScreen.storyboard */,
 				46EBF58C238D0D7500F47A4E /* Info.plist */,
@@ -146,8 +167,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46EBF597238D700E00F47A4E /* BookingView.swift in Sources */,
+				46EBF595238D3B4000F47A4E /* Server.swift in Sources */,
 				46EBF57F238D0D7400F47A4E /* AppDelegate.swift in Sources */,
+				46EBF5BF238FCE9C00F47A4E /* ActivityHandler.swift in Sources */,
+				46EBF593238D3B3000F47A4E /* HelperExtensions.swift in Sources */,
 				46EBF581238D0D7400F47A4E /* SceneDelegate.swift in Sources */,
+				46EBF5B9238E8F3700F47A4E /* IntentsTable.swift in Sources */,
+				46EBF5BD238E936F00F47A4E /* ReservationsListView.swift in Sources */,
+				46EBF5BB238E905A00F47A4E /* ReservationDetailView.swift in Sources */,
 				46EBF583238D0D7400F47A4E /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
