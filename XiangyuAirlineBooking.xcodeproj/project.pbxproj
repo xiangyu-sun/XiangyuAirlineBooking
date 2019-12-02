@@ -19,7 +19,6 @@
 		46EBF5B9238E8F3700F47A4E /* IntentsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5B8238E8F3700F47A4E /* IntentsTable.swift */; };
 		46EBF5BB238E905A00F47A4E /* ReservationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5BA238E905A00F47A4E /* ReservationDetailView.swift */; };
 		46EBF5BD238E936F00F47A4E /* ReservationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5BC238E936F00F47A4E /* ReservationsListView.swift */; };
-		46EBF5BF238FCE9C00F47A4E /* ActivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF5BE238FCE9C00F47A4E /* ActivityHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +36,6 @@
 		46EBF5B8238E8F3700F47A4E /* IntentsTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentsTable.swift; sourceTree = "<group>"; };
 		46EBF5BA238E905A00F47A4E /* ReservationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailView.swift; sourceTree = "<group>"; };
 		46EBF5BC238E936F00F47A4E /* ReservationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationsListView.swift; sourceTree = "<group>"; };
-		46EBF5BE238FCE9C00F47A4E /* ActivityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +72,6 @@
 				46EBF580238D0D7400F47A4E /* SceneDelegate.swift */,
 				46EBF582238D0D7400F47A4E /* ContentView.swift */,
 				46EBF596238D700E00F47A4E /* BookingView.swift */,
-				46EBF5BE238FCE9C00F47A4E /* ActivityHandler.swift */,
 				46EBF5B8238E8F3700F47A4E /* IntentsTable.swift */,
 				46EBF5BC238E936F00F47A4E /* ReservationsListView.swift */,
 				46EBF5BA238E905A00F47A4E /* ReservationDetailView.swift */,
@@ -170,7 +167,6 @@
 				46EBF597238D700E00F47A4E /* BookingView.swift in Sources */,
 				46EBF595238D3B4000F47A4E /* Server.swift in Sources */,
 				46EBF57F238D0D7400F47A4E /* AppDelegate.swift in Sources */,
-				46EBF5BF238FCE9C00F47A4E /* ActivityHandler.swift in Sources */,
 				46EBF593238D3B3000F47A4E /* HelperExtensions.swift in Sources */,
 				46EBF581238D0D7400F47A4E /* SceneDelegate.swift in Sources */,
 				46EBF5B9238E8F3700F47A4E /* IntentsTable.swift in Sources */,

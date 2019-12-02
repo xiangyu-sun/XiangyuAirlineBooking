@@ -10,13 +10,14 @@ import SwiftUI
 
 struct ContentView: View {
     enum Tab {
-        case booking, history
+        case intents, booking
     }
     
-    @State private var selection: Tab = .booking
+    @State private var selection: Tab = .intents
 
     var body: some View {
         TabView(selection: $selection){
+            IntentsTable().tabItem{Text("Intents")}.tag(Tab.intents)
             BookingView().tabItem{Text("Booking")}.tag(Tab.booking)
         }
     }
