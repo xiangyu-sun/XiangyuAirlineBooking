@@ -13,13 +13,9 @@ struct IntentsTable: View {
     let showReservationPub = NotificationCenter.default.publisher(for: .showReservation)
     let startReservationCheckInPub = NotificationCenter.default.publisher(for: .startReservationCheckIn)
     
-    @State var reservationContainers = [INSpeakableString]()
-    fileprivate var showReservationNotificationToken: NSObjectProtocol?
-    fileprivate var startCheckInNotificationToken: NSObjectProtocol?
-    
-    @State var showCheckAlert = false
+    @State private var reservationContainers = [INSpeakableString]()
+    @State private var showCheckAlert = false
     @State var bookingNumber: String?
-    
     @State var reservationItemReferences: [INSpeakableString]?
     @State var reservationContainerReference: INSpeakableString?
     @State var singleReservation: Bool = false
@@ -54,7 +50,7 @@ struct IntentsTable: View {
             self.reservationContainers = server.reservationContainers()
         })
         .alert(isPresented: $showCheckAlert) {
-                Alert(title: Text("Check in for \(bookingNumber ?? "")"), message: Text("Start check-in flow"), dismissButton: .cancel())
+            Alert(title: Text("Check in for \(bookingNumber ?? "")"), message: Text("Start check-in flow"), dismissButton: .cancel())
         }.navigationBarItems(trailing: Button(action: {
             INInteraction.deleteAll(completion: nil)
         }, label: {Text("Clear")}))
