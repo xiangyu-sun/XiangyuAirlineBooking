@@ -78,6 +78,14 @@ class Server {
         flightDepartureDateComponents.hour = 10
         flightDepartureDateComponents.minute = 0
         flightDepartureDateComponents.timeZone = originTimeZone
+        
+        
+        // Flight boarding tomorrow at 8:30 am:
+        var flightBoardingDateComponents = tomorrowDateComponents
+        flightBoardingDateComponents.hour = 8
+        flightBoardingDateComponents.minute = 30
+        flightBoardingDateComponents.timeZone = originTimeZone
+        
 
         // Flight arrives 9 hours and 35 minutes after departure:
         let flightArrivalDateComponents = calendar.components(inTimeZone: destinationTimeZone,
@@ -107,47 +115,14 @@ class Server {
 
         // This marks the end of laying out the datetimes relative to each other and start of API usage example
 
-        /**
-         * The reserved flight departs from OSL airport and arrives at SFO airport.
-         *
-         * - Note: If you don't know both the IATA and ICAO code, it's OK to only use one of them.
-         * - Note: If you don't know the terminal or gate, it's OK to set them to nil.
-         */
-        let departureAirport = INAirport(name: nil, iataCode: "OSL", icaoCode: nil)
-        let departureAirportGate = INAirportGate(airport: departureAirport, terminal: nil, gate: nil)
-        let arrivalAirport = INAirport(name: nil, iataCode: "SFO", icaoCode: nil)
-        let arrivalAirportGate = INAirportGate(airport: arrivalAirport, terminal: "1", gate: nil)
+        
+  
+        let flight = IntentModel.makeFlight(flightDepartureDateComponents: flightDepartureDateComponents,
+                                            flightBoardingDateComponents: flightBoardingDateComponents,
+                                            flightArrivalDateComponents: flightArrivalDateComponents)
 
-        /**
-         * The reservation is for flight XX 815.
-         *
-         * - Note: Specify only the flight number in the flightNumber parameter, exluding the IATA or ICAO code.
-         */
-        let flight = INFlight(airline: INAirline(name: "Sample Airlines", iataCode: "XX", icaoCode: nil),
-                              flightNumber: "815",
-                              boardingTime: nil,
-                              flightDuration: INDateComponentsRange(start: flightDepartureDateComponents, end: flightArrivalDateComponents),
-                              departureAirportGate: departureAirportGate,
-                              arrivalAirportGate: arrivalAirportGate)
-
-        /**
-         * Provide a user activity for checking in. Siri may display this as a suggested shortcut at an opportune time
-         * that falls within the validDuration. When pressed, your app is expected to handle being launched with the specified
-         * user activity and display the check-in flow to the user.
-         *
-         * - Note: If the user has already checked in for this reservation, do not attach a check in activity. If the reservation
-         *         is being shown as a result of the user checking in, donate again without the check in activity.
-         * - Note: The user activity title is what's being displayed to the user as the title of the suggested shortcut.
-         * - Note: Make sure you specify what keys from the userInfo dictionary your app needs to be able to successfully start the
-         *         check-in flow.
-         */
-        let checkInActivity = NSUserActivity(activityType: "com.example.apple-samplecode.Siri-Event-Suggestions.check-in")
-        checkInActivity.title = "Check in for flight \(flight.airline.iataCode!) \(flight.flightNumber)"
-        checkInActivity.userInfo = ["bookingNumber": "SAMPLE-001"]
-        checkInActivity.requiredUserInfoKeys = ["bookingNumber"]
-        checkInActivity.webpageURL = URL(string: "http://sample.example/checkin?bookingNumber=SAMPLE-001")
-        let checkInAction = INReservationAction(type: .checkIn, validDuration: checkInValidDuration, userActivity: checkInActivity)
-
+        
+        let pax = ["Johnny Appleseed", "Jane Appleseed"]
         /**
          * The two flights where booked together and share a booking number. Since there are two passengers, you should donate two reservations
          * sharing the same booking number.
@@ -156,30 +131,10 @@ class Server {
          *         Your app may be launched with an INGetReservationDetailsIntent containing this INSpeakableString in the
          *         reservationItemReferences array.
          */
-        let johnnysFlightReservationItemReference = INSpeakableString(vocabularyIdentifier: "c7e795f2",
-                                                                      spokenPhrase: "Flight to San Francisco (Johnny)",
-                                                                      pronunciationHint: nil)
-        let johnnysFlightReservation = INFlightReservation(itemReference: johnnysFlightReservationItemReference,
-                                                           reservationNumber: "SAMPLE-001",
-                                                           bookingTime: bookingTime,
-                                                           reservationStatus: .confirmed,
-                                                           reservationHolderName: "Johnny Appleseed",
-                                                           actions: [checkInAction],
-                                                           reservedSeat: nil,
-                                                           flight: flight)
-
-        let janesFlightReservationItemReference = INSpeakableString(vocabularyIdentifier: "c7f7q5l1",
-                                                                    spokenPhrase: "Flight to San Francisco (Jane)",
-                                                                    pronunciationHint: nil)
-        let janesFlightReservation = INFlightReservation(itemReference: janesFlightReservationItemReference,
-                                                         reservationNumber: "SAMPLE-001",
-                                                         bookingTime: bookingTime,
-                                                         reservationStatus: .confirmed,
-                                                         reservationHolderName: "Jane Appleseed",
-                                                         actions: [checkInAction],
-                                                         reservedSeat: nil,
-                                                         flight: flight)
-
+        
+        let reservations = flight.makeReservationsForPax(pax, pnr: "XX009", checkInValidDuration: checkInValidDuration)
+        
+      
         /**
          * The hotel was booked together with the flight and shares the same booking number.
          *
@@ -220,7 +175,7 @@ class Server {
         let reservationContainerReference = INSpeakableString(vocabularyIdentifier: "df9bc3f5",
                                                               spokenPhrase: "Trip to San Francisco",
                                                               pronunciationHint: nil)
-        reservationContainersDictionary[reservationContainerReference] = [johnnysFlightReservation, janesFlightReservation, hotelReservation]
+        reservationContainersDictionary[reservationContainerReference] = reservations + [hotelReservation]
     }
 
     fileprivate func createRentalCarReservation() {
