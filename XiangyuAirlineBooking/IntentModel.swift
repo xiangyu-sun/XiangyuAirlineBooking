@@ -69,17 +69,18 @@ extension INFlight {
     }
     
     
-    func makeReservationsForPax(_ pax: [String], pnr: String, checkInValidDuration: INDateComponentsRange) ->  [INFlightReservation] {
-        return pax.map { (paxName) in
-            let reference = INSpeakableString(vocabularyIdentifier: String(paxName.hash),
-                                              spokenPhrase: "Flight to San Francisco (\(paxName))",
+    func makeReservationsForPax(_ pax: [Booking.Passenger], pnr: String, checkInValidDuration: INDateComponentsRange) ->  [INFlightReservation] {
+        return pax.map { (passenger) in
+            
+            let reference = INSpeakableString(vocabularyIdentifier: String(passenger.hashValue),
+                                              spokenPhrase: "Flight to San Francisco (\(passenger.firstName))",
                                               pronunciationHint: nil)
             
             let flightReservation = INFlightReservation(itemReference: reference,
                                                         reservationNumber: pnr,
                                                         bookingTime: INFlight.bookingTime,
                                                         reservationStatus: .confirmed,
-                                                        reservationHolderName: paxName,
+                                                        reservationHolderName: passenger.firstName,
                                                         actions: [makeReservationAction(pnr: pnr, checkInValidDuration: checkInValidDuration)],
                                                         reservedSeat: nil,
                                                         flight: self)
