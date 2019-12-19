@@ -115,7 +115,17 @@ class Server {
                                                          departureTimeZone: originTimeZone,
                                                          boardingDate: flightBoardingDateComponents,
                                                          arrivalDate: flightArrivalDateComponents,
-                                                         arrivalTimeZome: destinationTimeZone)])]
+                                                         arrivalTimeZome: destinationTimeZone)]),
+                        Booking(tripDescription: "Trip to San Francisco",
+                        pnr: "X8UY78",
+                        pax: [Booking.Passenger(firstName: "John", lastName: "Appleseed"),
+                              Booking.Passenger(firstName: "Jane", lastName: "Appleseed")],
+                        flights: [Booking.Flight(depatureDate: tomorrowDateComponents,
+                                                 departureTimeZone: originTimeZone,
+                                                 boardingDate: flightBoardingDateComponents,
+                                                 arrivalDate: flightArrivalDateComponents,
+                                                 arrivalTimeZome: destinationTimeZone)]),
+        ]
         
         
         createSanFranciscoTripReservation(bookings: bookings)
