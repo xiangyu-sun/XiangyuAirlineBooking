@@ -107,6 +107,36 @@ class Server {
                                                                   byAdding: DateComponents(hour: 9, minute: 35),
                                                                   to: calendar.date(from: flightDepartureDateComponents)!)!
         
+        
+        // second flight
+        let originTimeZone2ndFlight = TimeZone(identifier: "America/Los_Angeles")!
+        
+        let twoDayAfterTomorrowDateComponents = calendar.components(inTimeZone: originTimeZone2ndFlight,
+                                                                    byAdding: DateComponents(day: 2),
+                                                                    to: calendar.date(from: tomorrowDateComponents)!)!
+        
+        // Flight departs tomorrow at 10 am:
+        var flightDepartureDateComponents2ndFlight = twoDayAfterTomorrowDateComponents
+        flightDepartureDateComponents2ndFlight.hour = 14
+        flightDepartureDateComponents2ndFlight.minute = 0
+        flightDepartureDateComponents2ndFlight.timeZone = originTimeZone2ndFlight
+        
+        // Flight boarding tomorrow at 8:30 am:
+        var flightBoardingDateComponents2ndFlight = twoDayAfterTomorrowDateComponents
+        flightBoardingDateComponents2ndFlight.hour = 12
+        flightBoardingDateComponents2ndFlight.minute = 30
+        flightBoardingDateComponents2ndFlight.timeZone = originTimeZone2ndFlight
+        
+        
+        // Flight arrives 9 hours and 35 minutes after departure:
+        let destinationTimeZone2ndFlight = TimeZone(identifier: "Asian/Abu_Dhabi")!
+        let flightArrivalDateComponents2ndFlight = calendar.components(inTimeZone: destinationTimeZone2ndFlight,
+                                                                  byAdding: DateComponents(hour: 9, minute: 35),
+                                                                  to: calendar.date(from: flightDepartureDateComponents)!)!
+        
+        
+        
+        
         let bookings = [Booking(tripDescription: "Trip to San Francisco",
                                 pnr: "JUI9US",
                                 pax: [Booking.Passenger(firstName: "John", lastName: "Appleseed"),
@@ -116,15 +146,14 @@ class Server {
                                                          boardingDate: flightBoardingDateComponents,
                                                          arrivalDate: flightArrivalDateComponents,
                                                          arrivalTimeZome: destinationTimeZone)]),
-                        Booking(tripDescription: "Trip to San Francisco",
+                        Booking(tripDescription: "Trip to Dubai",
                         pnr: "X8UY78",
-                        pax: [Booking.Passenger(firstName: "John", lastName: "Appleseed"),
-                              Booking.Passenger(firstName: "Jane", lastName: "Appleseed")],
-                        flights: [Booking.Flight(depatureDate: tomorrowDateComponents,
-                                                 departureTimeZone: originTimeZone,
-                                                 boardingDate: flightBoardingDateComponents,
-                                                 arrivalDate: flightArrivalDateComponents,
-                                                 arrivalTimeZome: destinationTimeZone)]),
+                        pax: [Booking.Passenger(firstName: "Jane", lastName: "Appleseed")],
+                        flights: [Booking.Flight(depatureDate: flightDepartureDateComponents2ndFlight,
+                                                 departureTimeZone: originTimeZone2ndFlight,
+                                                 boardingDate: flightBoardingDateComponents2ndFlight,
+                                                 arrivalDate: flightArrivalDateComponents2ndFlight,
+                                                 arrivalTimeZome: destinationTimeZone2ndFlight)]),
         ]
         
         
