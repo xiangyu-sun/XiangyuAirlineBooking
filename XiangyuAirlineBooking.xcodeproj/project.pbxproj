@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E752EC923A6168F00F33BCC /* IntentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E752EC823A6168F00F33BCC /* IntentModel.swift */; };
+		3EBB3DAE23B227D700949353 /* TripEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB3DAD23B227D700949353 /* TripEventHandler.swift */; };
 		46EBF57F238D0D7400F47A4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF57E238D0D7400F47A4E /* AppDelegate.swift */; };
 		46EBF581238D0D7400F47A4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF580238D0D7400F47A4E /* SceneDelegate.swift */; };
 		46EBF583238D0D7400F47A4E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBF582238D0D7400F47A4E /* ContentView.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		3E752EC823A6168F00F33BCC /* IntentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentModel.swift; sourceTree = "<group>"; };
+		3EBB3DAD23B227D700949353 /* TripEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripEventHandler.swift; sourceTree = "<group>"; };
 		46EBF57B238D0D7400F47A4E /* XiangyuAirlineBooking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XiangyuAirlineBooking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46EBF57E238D0D7400F47A4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46EBF580238D0D7400F47A4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				46EBF5BC238E936F00F47A4E /* ReservationsListView.swift */,
 				46EBF5BA238E905A00F47A4E /* ReservationDetailView.swift */,
 				46EBF594238D3B4000F47A4E /* Server.swift */,
+				3EBB3DAD23B227D700949353 /* TripEventHandler.swift */,
 				3E752EC823A6168F00F33BCC /* IntentModel.swift */,
 				46EBF592238D3B3000F47A4E /* HelperExtensions.swift */,
 				46EBF584238D0D7500F47A4E /* Assets.xcassets */,
@@ -175,6 +178,7 @@
 				3E752EC923A6168F00F33BCC /* IntentModel.swift in Sources */,
 				46EBF5B9238E8F3700F47A4E /* IntentsTable.swift in Sources */,
 				46EBF5BD238E936F00F47A4E /* ReservationsListView.swift in Sources */,
+				3EBB3DAE23B227D700949353 /* TripEventHandler.swift in Sources */,
 				46EBF5BB238E905A00F47A4E /* ReservationDetailView.swift in Sources */,
 				46EBF583238D0D7400F47A4E /* ContentView.swift in Sources */,
 			);

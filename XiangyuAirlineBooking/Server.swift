@@ -56,7 +56,7 @@ class Server {
     
     fileprivate let bookingTime = Date(timeIntervalSince1970: 1_559_554_860)
     
-    fileprivate var reservationContainersDictionary: [INSpeakableString: [INReservation]] = [:]
+    var reservationContainersDictionary: [INSpeakableString: [INReservation]] = [:]
     
     func reservationContainers() -> [INSpeakableString] {
         return Array(reservationContainersDictionary.keys)
@@ -171,30 +171,7 @@ class Server {
           */
          
     fileprivate func refreshTrips(bookings: [Booking]) {
-        bookings.forEach(addTrip(_:))
-    }
-    
-    fileprivate func addTrip(_ booking: Booking) {
-        let reservations: [INReservation] = booking.flights.reduce(into: []) { (result, flight) in
-            var aResult = result
-            let inFlight = IntentModel.makeFlight(flightDepartureDateComponents: flight.depatureDate,
-                                                  flightBoardingDateComponents: flight.boardingDate,
-                                                  flightArrivalDateComponents: flight.arrivalDate)
-            
-            return aResult.append(contentsOf: inFlight.makeReservationsForPax(booking, checkInValidDuration: flight.checkinValidDuration))
-        }
-        
-        
-        /// PNR as container reference
-        let reservationContainerReference = INSpeakableString(vocabularyIdentifier: booking.pnr,
-                                                              spokenPhrase: booking.tripDescription,
-                                                              pronunciationHint: nil)
-        
-        reservationContainersDictionary[reservationContainerReference] = reservations
-    }
-    
-    func deleteTrip(_ booking: Booking) {
-        
+        bookings.forEach{NotificationCenter.default.post(name: .tripViewNotification, object: $0, userInfo: nil) }
     }
     
     private func makeHotelReservation(hotelCheckInDateComponents: DateComponents, hotelCheckOutDateComponents: DateComponents) -> INLodgingReservation {
