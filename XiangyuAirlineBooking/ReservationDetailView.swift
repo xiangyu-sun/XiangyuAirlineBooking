@@ -23,10 +23,16 @@ struct ReservationDetailView: View {
           guard let reservation = reservation, let reservationContainerReference = reservationContainerReference else {
               return
           }
-
+        
+        
+        /* reservationItemReferences empty or with "\(booking.pnr)-\(flightNumber)-\(passenger.fullName)"
+         for example when there is only flight flight for checkin
+         */
           let intent = INGetReservationDetailsIntent(reservationContainerReference: reservationContainerReference,
                                                      reservationItemReferences: nil)
+        
           let intentResponse = INGetReservationDetailsIntentResponse(code: .success, userActivity: nil)
+        
           intentResponse.reservations = [reservation]
           let interaction = INInteraction(intent: intent, response: intentResponse)
           interaction.donate { error in

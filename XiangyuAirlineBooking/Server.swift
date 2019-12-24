@@ -12,22 +12,23 @@ import Contacts
 let calendar = Calendar(identifier: .gregorian)
 
 struct Booking {
-    struct Passenger: Hashable {
-        let firstName: String
-        let lastName: String
-        
-        var fullName : String {
-            return firstName + lastName
-        }
-    }
-    
     struct Flight {
+        
+        struct Passenger: Hashable {
+            let firstName: String
+            let lastName: String
+            
+            var fullName : String {
+                return firstName + lastName
+            }
+        }
+        
         let depatureDate: DateComponents
         let departureTimeZone: TimeZone
         let boardingDate: DateComponents
         let arrivalDate: DateComponents
         let arrivalTimeZome: TimeZone
-        
+        let pax: [Passenger]
         
         var checkinValidDuration: INDateComponentsRange {
             let checkStartDateComponents = calendar.components(inTimeZone: departureTimeZone,
@@ -42,7 +43,6 @@ struct Booking {
     }
     let tripDescription: String
     let pnr: String
-    let pax: [Passenger]
     let flights: [Flight]
 }
 
@@ -139,25 +139,25 @@ class Server {
         
         let bookings = [Booking(tripDescription: "Trip to San Francisco",
                                 pnr: "JUI9US",
-                                pax: [Booking.Passenger(firstName: "John", lastName: "Appleseed"),
-                                      Booking.Passenger(firstName: "Jane", lastName: "Appleseed")],
                                 flights: [Booking.Flight(depatureDate: tomorrowDateComponents,
                                                          departureTimeZone: originTimeZone,
                                                          boardingDate: flightBoardingDateComponents,
                                                          arrivalDate: flightArrivalDateComponents,
-                                                         arrivalTimeZome: destinationTimeZone)]),
+                                                         arrivalTimeZome: destinationTimeZone,
+                                                         pax: [Booking.Flight.Passenger(firstName: "John", lastName: "Appleseed"),
+                                                               Booking.Flight.Passenger(firstName: "Jane", lastName: "Appleseed")])]),
                         Booking(tripDescription: "Trip to Dubai",
                         pnr: "X8UY78",
-                        pax: [Booking.Passenger(firstName: "Jane", lastName: "Appleseed")],
                         flights: [Booking.Flight(depatureDate: flightDepartureDateComponents2ndFlight,
                                                  departureTimeZone: originTimeZone2ndFlight,
                                                  boardingDate: flightBoardingDateComponents2ndFlight,
                                                  arrivalDate: flightArrivalDateComponents2ndFlight,
-                                                 arrivalTimeZome: destinationTimeZone2ndFlight)]),
+                                                 arrivalTimeZome: destinationTimeZone2ndFlight,
+                                                 pax: [Booking.Flight.Passenger(firstName: "Jane", lastName: "Appleseed")])]),
         ]
         
         
-        createSanFranciscoTripReservation(bookings: bookings)
+        refreshTrips(bookings: bookings)
     }
     
     
@@ -170,31 +170,31 @@ class Server {
           *         reservationItemReferences array.
           */
          
-    fileprivate func createSanFranciscoTripReservation(bookings: [Booking]) {
-        
-        bookings.forEach { (booking) in
-            let reservations: [INReservation] = booking.flights.reduce(into: []) { (result, flight) in
-                var aResult = result
-                let inFlight = IntentModel.makeFlight(flightDepartureDateComponents: flight.depatureDate,
-                                                      flightBoardingDateComponents: flight.boardingDate,
-                                                      flightArrivalDateComponents: flight.arrivalDate)
-                
-                return aResult.append(contentsOf: inFlight.makeReservationsForPax(booking.pax, pnr: booking.pnr, checkInValidDuration: flight.checkinValidDuration))
-            }
+    fileprivate func refreshTrips(bookings: [Booking]) {
+        bookings.forEach(addTrip(_:))
+    }
+    
+    fileprivate func addTrip(_ booking: Booking) {
+        let reservations: [INReservation] = booking.flights.reduce(into: []) { (result, flight) in
+            var aResult = result
+            let inFlight = IntentModel.makeFlight(flightDepartureDateComponents: flight.depatureDate,
+                                                  flightBoardingDateComponents: flight.boardingDate,
+                                                  flightArrivalDateComponents: flight.arrivalDate)
             
-            /**
-             * Donate all three reservations together.
-             *
-             * - Note: Since all three reservations will end up being donated together, the container reference should be an identifier the app
-             *         can use to uniquely identify this group of three reservations. The spoken phrase should also be something that makes
-             *         sense to the user as it might be used as a shortcut.
-             */
-            let reservationContainerReference = INSpeakableString(vocabularyIdentifier: String(booking.tripDescription.hashValue),
-                                                                  spokenPhrase: booking.tripDescription,
-                                                                  pronunciationHint: nil)
-            
-            reservationContainersDictionary[reservationContainerReference] = reservations
+            return aResult.append(contentsOf: inFlight.makeReservationsForPax(booking, checkInValidDuration: flight.checkinValidDuration))
         }
+        
+        
+        /// PNR as container reference
+        let reservationContainerReference = INSpeakableString(vocabularyIdentifier: booking.pnr,
+                                                              spokenPhrase: booking.tripDescription,
+                                                              pronunciationHint: nil)
+        
+        reservationContainersDictionary[reservationContainerReference] = reservations
+    }
+    
+    func deleteTrip(_ booking: Booking) {
+        
     }
     
     private func makeHotelReservation(hotelCheckInDateComponents: DateComponents, hotelCheckOutDateComponents: DateComponents) -> INLodgingReservation {

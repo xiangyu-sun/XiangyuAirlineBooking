@@ -69,24 +69,36 @@ extension INFlight {
     }
     
     
-    func makeReservationsForPax(_ pax: [Booking.Passenger], pnr: String, checkInValidDuration: INDateComponentsRange) ->  [INFlightReservation] {
-        return pax.map { (passenger) in
+    
+    /// reservationNumber to group revervation, itemReference to identify diffrent flight
+    /// - Parameters:
+    ///   - pax: <#pax description#>
+    ///   - pnr: <#pnr description#>
+    ///   - checkInValidDuration: <#checkInValidDuration description#>
+    func makeReservationsForPax(_ booking: Booking, checkInValidDuration: INDateComponentsRange, seat: String? = nil, revStatus: INReservationStatus = .confirmed) ->  [INFlightReservation] {
+        return booking.flights.reduce(into: [INFlightReservation]()) { (result, flight) in
+            let allPax = flight.pax.map { (passenger) -> INFlightReservation in
+                
+                let referenceString = "\(booking.pnr)-\(flightNumber)-\(passenger.fullName)"
+                let reference = INSpeakableString(vocabularyIdentifier: referenceString,
+                                                  spokenPhrase: "Flight to San Francisco (\(passenger.firstName))",
+                                                  pronunciationHint: nil)
+                
+                let seat = INSeat(seatSection: nil, seatRow: nil, seatNumber: seat, seatingType: nil)
+                
+                let flightReservation = INFlightReservation(itemReference: reference,
+                                                            reservationNumber: booking.pnr,
+                                                            bookingTime: INFlight.bookingTime,
+                                                            reservationStatus: revStatus,
+                                                            reservationHolderName: passenger.firstName,
+                                                            actions: [makeReservationAction(pnr: booking.pnr, checkInValidDuration: checkInValidDuration)],
+                                                            reservedSeat: seat,
+                                                            flight: self)
+                return flightReservation
+            }
             
-            let reference = INSpeakableString(vocabularyIdentifier: String(passenger.hashValue),
-                                              spokenPhrase: "Flight to San Francisco (\(passenger.firstName))",
-                                              pronunciationHint: nil)
-            
-            let flightReservation = INFlightReservation(itemReference: reference,
-                                                        reservationNumber: pnr,
-                                                        bookingTime: INFlight.bookingTime,
-                                                        reservationStatus: .confirmed,
-                                                        reservationHolderName: passenger.firstName,
-                                                        actions: [makeReservationAction(pnr: pnr, checkInValidDuration: checkInValidDuration)],
-                                                        reservedSeat: nil,
-                                                        flight: self)
-            return flightReservation
+            return  result.append(contentsOf: allPax)
         }
-        
-        
     }
+
 }
