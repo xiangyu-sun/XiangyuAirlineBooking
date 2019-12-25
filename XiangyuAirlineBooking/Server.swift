@@ -56,7 +56,7 @@ class Server {
     
     fileprivate let bookingTime = Date(timeIntervalSince1970: 1_559_554_860)
     
-    var reservationContainersDictionary: [INSpeakableString: [INReservation]] = [:]
+    private var reservationContainersDictionary: [INSpeakableString: [INReservation]] = [:]
     
     func reservationContainers() -> [INSpeakableString] {
         return Array(reservationContainersDictionary.keys)
@@ -129,7 +129,7 @@ class Server {
         
         
         // Flight arrives 9 hours and 35 minutes after departure:
-        let destinationTimeZone2ndFlight = TimeZone(identifier: "Asian/Abu_Dhabi")!
+        let destinationTimeZone2ndFlight = TimeZone(abbreviation: "GST")!
         let flightArrivalDateComponents2ndFlight = calendar.components(inTimeZone: destinationTimeZone2ndFlight,
                                                                   byAdding: DateComponents(hour: 9, minute: 35),
                                                                   to: calendar.date(from: flightDepartureDateComponents)!)!
@@ -171,7 +171,24 @@ class Server {
           */
          
     fileprivate func refreshTrips(bookings: [Booking]) {
-        bookings.forEach{NotificationCenter.default.post(name: .tripViewNotification, object: $0, userInfo: nil) }
+        bookings.forEach { (booking) in
+            let reservations: [INReservation] = booking.flights.reduce(into: []) { (result, flight) in
+                let inFlight = IntentModel.makeFlight(flightDepartureDateComponents: flight.depatureDate,
+                                                      flightBoardingDateComponents: flight.boardingDate,
+                                                      flightArrivalDateComponents: flight.arrivalDate)
+                
+                result.append(contentsOf: inFlight.makeReservationsForPax(booking, checkInValidDuration: flight.checkinValidDuration))
+            }
+            
+            
+            /// PNR as container reference
+            let reservationContainerReference = INSpeakableString(vocabularyIdentifier: booking.pnr,
+                                                                  spokenPhrase: booking.tripDescription,
+                                                                  pronunciationHint: nil)
+            
+            reservationContainersDictionary[reservationContainerReference] = reservations
+        }
+        
     }
     
     private func makeHotelReservation(hotelCheckInDateComponents: DateComponents, hotelCheckOutDateComponents: DateComponents) -> INLodgingReservation {
